@@ -28,5 +28,10 @@ dependencies {
     // 라이브러리의 특정 버전을 명시하면 안됨. 명시하면 위에서 설정한 전역변수 springBootVersion의 버전 컨트롤이 적용 안됨.
     // 버전을 명시하지 않고 버전 관리를 한곳으로 집중하기 때문에, 서로 호환되는 특정 스프링 부트 버전으로 라이브러리들을 통합 관리할 수 있다
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'com.h2database:h2'
+    implementation 'org.projectlombok:lombok'
+    implementation 'org.springframework.boot:spring-boot-starter-mustache'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
