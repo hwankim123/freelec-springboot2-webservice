@@ -1,5 +1,7 @@
 package com.jojoldu.book.springboot.config.auth;
 
+import com.jojoldu.book.springboot.config.auth.dto.OAuthAttributes;
+import com.jojoldu.book.springboot.config.auth.dto.SessionUser;
 import com.jojoldu.book.springboot.domain.user.User;
 import com.jojoldu.book.springboot.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,15 +41,16 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         // 네이버 카카오 등은 기본 지원하지 않지만, 구글의 경우 "sub"라는 기본 코드를 지원해줌
         // 이후 네이버 로그인과 구글 로그인을 동시 지원할 때 사용
 
-        //OAuth2UserService를 통해 가져온 OAuth2User의 attribute를 담는 클래스
+        //OAuthAttributes: OAuth2UserService를 통해 가져온 OAuth2User의 attribute를 담는 DTO클래스
         // 이후 네이버 등 다른 소셜 로그인도 이 클래스를 사용
         OAuthAttributes attributes = OAuthAttributes
                 .of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
         User user = saveOrUpdate(attributes);
 
-        // SessionUser 세션에 사용자 정보를 저장하기 위한 Dto 클래스
-        // User 클래스를 사용하지 않고 SessionUser라는 새로운 클래스를 사용하는 이유는는        httpSession.setAttribute("user", new SessionUser(user));
+        // SessionUser: 세션에 사용자 정보를 저장하기 위한 Dto 클래스
+        // User 클래스를 사용하지 않고 SessionUser라는 새로운 클래스를 사용하는 이유는
+        httpSession.setAttribute("user", new SessionUser(user));
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),
