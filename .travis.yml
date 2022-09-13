@@ -2,6 +2,10 @@ language: java
 jdk:
   - openjdk8
 
+#gradlew에 permission 문제가 발생해서 Travis Build에 실패할 경우 해당 코드 추가
+before_install:
+  - chmod +x gradlew
+
 #Travis CI를 어느 브랜치가 푸시될 때 수행할지
 branches:
   only:
