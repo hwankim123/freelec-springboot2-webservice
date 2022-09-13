@@ -17,7 +17,7 @@ cache:
 # 위에서 설정한 브랜치에 푸시되었을 때 실행될 명령어. gradlew를 이용해 clean & build를 실행
 script: "./gradlew clean build"
 
-#CI 실행 완료 시 메일로 알람
+#CI 실행 완료 시 메일로 알람.
 notifications:
   email:
     recipients:
