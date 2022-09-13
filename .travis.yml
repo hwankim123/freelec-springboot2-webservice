@@ -21,6 +21,24 @@ cache:
 # 위에서 설정한 브랜치에 푸시되었을 때 실행될 명령어. gradlew를 이용해 clean & build를 실행
 script: "./gradlew clean build"
 
+# CodeDeploy는 Jar 파일을 인식하지 못하므로 Jar파일과 기타 파일들을 zip로 압축
+before deploy:
+  - zip -r freelec-springboot2-webservice *
+  - mkdir -p deploy
+  - mv freelec-springboot2-webservice.zip deploy/freelec-springboot2-webservice.zip
+
+# S3로 파일 업로드 혹은 CodeDeploy로 배포 등 외부 서비스와 연동될 행위들을 선언
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: hwankim123-freelec-springboot-build
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: private # zip 파일 접근을 private으로 설정
+    local_dir: deploy # before_deploy에서 생성한 디렉토리. 해당 위치의 파일들만 S3로 전송
+    wait-until-deployed: true
+
 #CI 실행 완료 시 메일로 알람.
 notifications:
   email:
