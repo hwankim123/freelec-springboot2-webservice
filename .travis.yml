@@ -22,7 +22,7 @@ cache:
 script: "./gradlew clean build"
 
 # CodeDeploy는 Jar 파일을 인식하지 못하므로 Jar파일과 기타 파일들을 zip로 압축
-before deploy:
+before_deploy:
   - mkdir -p before-deploy # TravisCI는 S3로 특정 파일만 업로드할 수 없다. 그렇기 떄문에 디렉토리 통쨰로 업로드 하기 위한 before-deploy 폴더 생성
   - cp scripts/*.sh before-deploy/ # before-deploy에는 zip 파일에 포함시킬 파일들을 저장
   - cp appspec.yml before-deploy/
